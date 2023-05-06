@@ -12,14 +12,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@master
 
-      - name: Enter directory
-        run: cd flashcards
-
       - name: Install dependencies
-        run: npm install
+        run: npm install flashcards
 
       - name: Build website
-        run: npm run build
+        run: npm run build -C flashcards
 
       - name: Upload to S3
         env:
