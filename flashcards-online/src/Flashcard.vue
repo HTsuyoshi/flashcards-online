@@ -5,13 +5,17 @@
 
 	onMounted(() => {
 		const game = gameRef.value;
-		if (!game)
-			throw new Error('Canvas not found');
-
+		if (!game) throw new Error('Canvas not found');
 		const context = game.getContext('2d');
 		if (!context) return;
 
 		const ctx = context;
+
+		// States
+		const states = [ 'title', 'menu' ];
+		let current_state = states[0];
+
+		//let time = 0;
 
 		// Colors
 		const color_black = '#4a4a4a';
@@ -21,9 +25,19 @@
 		ctx.fillStyle = color_black;
 		ctx.strokeStyle = color_black;
 
-		// States
-		const states = [ 'title' ];
-		let current_state = states[0];
+		// Setup mouse
+		//let mouse = {
+		//	x: undefined,
+		//	y: undefined
+		//}
+
+		//window.addEventListener('mousemove',
+		//	function(event){
+		//		mouse.x = event.x;
+		//		mouse.y = event.y;
+		//		console.log(mouse);
+		//	}
+		//)
 
 		// Basic functions
 		function setup() {
@@ -55,21 +69,39 @@
 			ctx.stroke();
 		}
 
-		function writeTitle(title: string) {
+		function writeTitle(title: string, x: number, y: number, size: number) {
 			const offset = 3;
-			ctx.font = '100px Arial';
-			ctx.fillText(title, window.innerWidth / 2 - (ctx.measureText(title).width / 2), window.innerHeight / 2);
-			ctx.strokeText(title, window.innerWidth / 2 - (ctx.measureText(title).width / 2) + offset, window.innerHeight / 2 - offset);
+			ctx.font = `${size}px Arial`;
+			ctx.fillText(title, x - (ctx.measureText(title).width / 2), y);
+			ctx.strokeText(title, x + offset - (ctx.measureText(title).width / 2), y - offset);
 		}
 
-		//function writeText(text: string) {
-		//	ctx.font = '40px Arial';
-		//	ctx.fillText(text, window.innerWidth / 2, window.innerHeight / 2);
-		//}
+		function writeText(text: string, x: number, y: number, size: number) {
+			ctx.font = `${size}px Arial`;
+			ctx.fillText(text, x - (ctx.measureText(text).width / 2), y);
+		}
+
+		function drawBox(text: string, x: number, y: number, w: number, h: number, size: number) {
+			writeText(text, x, y, size);
+			ctx.font = `${size}px Arial`;
+			ctx.lineWidth = 2;
+			ctx.strokeRect(x - w/2, y - 6*h/8, w, h);
+		}
+
+		// Shapes functions
 
 		// Top level functions
-		function drawTitle() {
-			writeTitle('Flash Cards');
+		//function drawTitleScreen(t: number) {
+		function drawTitleScreen() {
+			let y = window.innerHeight / 2;
+			let x = window.innerWidth / 2;
+			//if (t > 10) {
+			//	y = y - (t - 10) * 10;
+			//}
+			//if (y < -window.innerHeight / 10) {
+			//	current_state = 'menu';
+			//}
+			writeTitle('Flash Cards', x, y, window.innerWidth / 10);
 		}
 
 		// Main function
@@ -79,13 +111,19 @@
 			ctx.shadowColor = color_black;
 			drawArrow();
 			border();
-			if (current_state == 'title') {
-				drawTitle();
+			if (current_state[0] == 't') {
+				//time++;
+				drawTitleScreen();
+				//drawTitleScreen(time);
+				return;
+			}
+			if (current_state[0] == 'm') {
+				drawBox('start', window.innerWidth / 2, window.innerHeight / 2, 200, 100, window.innerWidth / 10);
 				return;
 			}
 		}
 
-		setInterval(draw, 500);
+		setInterval(draw, 20);
 	});
 </script>
 
