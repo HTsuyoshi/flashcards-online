@@ -21,6 +21,8 @@ WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
 
-COPY --from=build /flashcards-online/dist .
+RUN mkdir ./flashcards
+
+COPY --from=build /flashcards-online/dist ./flashcards
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
