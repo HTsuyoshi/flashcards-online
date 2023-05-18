@@ -52,6 +52,7 @@
 			current_kanji.push(kanji_data[i+j]);
 		}
 
+		if (title.value) title.value.innerText = 'Guess';
 		next_kanji();
 		setup_question();
 	}
@@ -62,6 +63,7 @@
 		question_style.value  = { display: 'none' };
 		score_style.value     = { display: 'none' };
 
+		if (title.value) title.value.innerText = 'Choose Kanji';
 		for (let i=0; i<10; i++) {
 			current_kanji_life[i] = 1;
 		}
@@ -76,6 +78,7 @@
 		if (kanji_meaning_ref.value) kanji_meaning_ref.value.innerText = 'Meanings: ' + answer.meanings.join(', ');
 		if (kanji_kun_ref.value) kanji_kun_ref.value.innerText         = 'Kun readings: ' + answer.kun_readings.join(', ');
 		if (kanji_on_ref.value) kanji_on_ref.value.innerText           = 'On reading:' + answer.on_readings.join(', ');
+		if (title.value) title.value.innerText = 'Answer';
 	}
 
 	// Transition
@@ -110,6 +113,7 @@
 			return;
 		}
 
+		if (title.value) title.value.innerText = 'Guess';
 		next_kanji();
 		setup_question();
 	}
@@ -117,6 +121,8 @@
 	function scored_wrong() {
 		if (current_kanji_life[current_kanji_index] == 1) {
 			current_kanji_life[current_kanji_index]--;
+			kanji_counter_new++;
+			if (kanji_counter_new_ref.value) kanji_counter_new_ref.value.innerText = `New kanji: ${kanji_counter_new}`;
 			next_kanji();
 			setup_question();
 			return;
@@ -128,6 +134,7 @@
 			if (kanji_counter_wrong_ref.value) kanji_counter_wrong_ref.value.innerText = `Wrong: ${kanji_counter_wrong}`;
 		}
 
+		if (title.value) title.value.innerText = 'Guess';
 		next_kanji();
 		setup_question();
 	}
@@ -142,13 +149,16 @@
 	const kanji_counter: Ref<HTMLElement | null> = ref(null);
 	const question: Ref<HTMLElement | null> = ref(null);
 	const question_repeat: Ref<HTMLElement | null> = ref(null);
+	const title: Ref<HTMLElement | null> = ref(null);
 
 	// Game
 	let i: number = 0;
 	let kanji_counter_right: number = 0;
 	let kanji_counter_wrong: number = 0;
+	let kanji_counter_new: number = 0;
 	const kanji_counter_right_ref: Ref<HTMLElement | null> = ref(null);
 	const kanji_counter_wrong_ref: Ref<HTMLElement | null> = ref(null);
+	const kanji_counter_new_ref: Ref<HTMLElement | null> = ref(null);
 	const current_kanji: string[] = [];
 	const current_kanji_life: number[] = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 	const kanji_meaning_ref: Ref<HTMLElement | null> = ref(null);
@@ -169,7 +179,7 @@
 
 <template>
 	<div id='canva' class='white'>
-		<div>
+		<div ref='title'>
 			Choose Kanji
 		</div>
 		<div>
@@ -211,6 +221,9 @@
 						Wrong: 0
 					</div>
 				</div>
+				<div ref='kanji_counter_new_ref'>
+					New Kanji: 0
+				</div>
 			</div>
 		</div>
 		<div>
@@ -235,7 +248,7 @@
 				</div>
 				<div :style='answer_style'>
 					<button @click='view_answer()'>
-						continue
+						Continue
 					</button>
 				</div>
 			</div>
