@@ -25,9 +25,6 @@
 
 	function setup_kanji() {
 		for (let j=0; j<10 && ((i + j) < kanji_data.length); j++) {
-			console.log(kanjiRefs);
-			console.log(kanjiRefs.value);
-			console.log(kanjiRefs.value[i]);
 			if (kanjiRefs.value)
 				kanjiRefs.value[j].innerText = kanji_data[i+j];
 		}
@@ -218,14 +215,17 @@
 		</div>
 		<div>
 			<div :style='selection_style' id='selection-buttons'>
-				<div id='buttons'>
+				<div>
 					<button @click='prev_page()' class='white'>Prev</button>
 					<button @click='next_page()' class='white'>Next</button>
 				</div>
 				<button @click='setup_game()' class='white'>Start</button>
+				<router-link to='selection' id='return'>
+					<button class='white'>Return</button>
+				</router-link>
 			</div>
 			<div>
-				<div :style='game_style' id='buttons'>
+				<div :style='game_style'>
 					<button @click='scored_wrong()' class='white'>
 						<font-awesome-icon :icon="['fas', 'xmark']" />
 					</button>
@@ -249,10 +249,6 @@
 	flex-direction: column;
 	align-items: center;
 }
-#buttons button {
-	display: inline-block;
-	margin: 1em;
-}
 #question {
 	font-size: 2em;
 }
@@ -269,6 +265,10 @@
 	display: flex;
 }
 #counter div {
+	margin: 1em;
+}
+button {
+	display: inline-block;
 	margin: 1em;
 }
 ul {
