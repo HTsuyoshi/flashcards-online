@@ -9,8 +9,8 @@
 			.catch(error => console.error(error));
 	}
 
-	async function get_answer(kanji: string) {
-		answer = await fetch(`https://kanjiapi.dev/v1/kanji/${kanji}`)
+	async function get_answer(one_kanji: string) {
+		answer = await fetch(`https://kanjiapi.dev/v1/kanji/${one_kanji}`)
 			.then(response => response.json())
 			.catch(error => console.error(error));
 	}
@@ -25,6 +25,9 @@
 
 	function setup_kanji() {
 		for (let j=0; j<10 && ((i + j) < kanji_data.length); j++) {
+			console.log(kanjiRefs);
+			console.log(kanjiRefs.value);
+			console.log(kanjiRefs.value[i]);
 			if (kanjiRefs.value)
 				kanjiRefs.value[j].innerText = kanji_data[i+j];
 		}
@@ -137,8 +140,7 @@
 	let answer: any;
 
 	// Refs
-	const kanji: Ref<HTMLElement[] | null> = ref(null);
-	const kanjiRefs: Ref<HTMLElement[] | null> = ref(null);
+	const kanjiRefs: Ref<HTMLElement[]> = ref([]);
 	const page_counter: Ref<HTMLElement | null> = ref(null);
 	const kanji_counter: Ref<HTMLElement | null> = ref(null);
 	const question: Ref<HTMLElement | null> = ref(null);
@@ -176,13 +178,9 @@
 		<div>
 			<div :style='selection_style'>
 				<ul>
-					<li v-for='(item, index) in kanji' :key='index' :ref='(el) => {
-							if (kanjiRefs)
-								if (kanjiRefs[index]) {
-									kanjiRefs[index] = el as HTMLElement;
-								}
+					<li v-for='index in 10' :key='index' :ref='(el) => {
+							if (kanjiRefs) kanjiRefs.push(el as HTMLElement);
 						}'>
-						{{ item }}
 					</li>
 				</ul>
 			</div>
