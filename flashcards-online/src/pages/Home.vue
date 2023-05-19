@@ -26,15 +26,19 @@
 
 <style>
 #canva {
-	width: 80vw;
+	width: 85vw;
 	min-height: 90vh;
 
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-evenly;
 	align-items: center;
+	justify-content: space-evenly;
 	border: 0.1em solid var(--white);
 	flex-direction: column;
+
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 0.5em;
 }
 #title {
 	font-size: 200%;
