@@ -263,7 +263,7 @@
 	align-items: center;
 }
 #question {
-	font-size: 2em;
+	font-size: 8em;
 }
 #answer {
 	margin-top: 3em;
