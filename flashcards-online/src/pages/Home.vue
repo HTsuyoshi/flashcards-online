@@ -52,6 +52,7 @@ a {
 }
 a:hover {
 	text-decoration: none;
+	text-shadow: 0px 0px 3px var(--white);
 }
 button {
 	background-color: var(--black);
@@ -59,5 +60,10 @@ button {
 	color: var(--white);
 	width: 10em;
 	height: 4em;
+}
+button:hover {
+	background-color: var(--white);
+	color: var(--black);
+	transition: 0.2s ease;
 }
 </style>
