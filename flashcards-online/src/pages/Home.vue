@@ -26,8 +26,8 @@
 
 <style>
 #canva {
-	width: 85vw;
-	min-height: 90vh;
+	width: 85svw;
+	min-height: 90svh;
 
 	display: flex;
 	flex-wrap: wrap;
