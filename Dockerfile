@@ -23,6 +23,6 @@ RUN rm -rf ./*
 
 RUN mkdir ./flashcards
 
-COPY --from=build /flashcards-online/dist ./flashcards
+COPY --from=build /dist ./
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

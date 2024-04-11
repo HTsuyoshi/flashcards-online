@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-	const selection = '/flashcards/selection';
+	const selection = '/selection';
 </script>
 
 <template>

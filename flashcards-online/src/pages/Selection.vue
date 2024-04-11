@@ -14,7 +14,7 @@
 		All = 'all'
 	};
 
-	const game = '/flashcards/game?category=';
+	const game = '/game?category=';
 </script>
 
 <template>
